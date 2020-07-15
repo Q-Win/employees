@@ -1,13 +1,23 @@
 import React from 'react';
+import { withTracker } from 'meteor/react-meteor-data';
+import { Employees } from '../../imports/collections/employees';
+import EmployeeDetail from './employee_detail';
 
-const EmployeeList = () => {
+const EmployeeList = (props) => {
   return (
     <div>
       <div className="employee-list">
-        Employee List
+        {props.employees.map(employee => <EmployeeDetail />)}
       </div>
     </div>
-  )
+  );
 };
 
-export default EmployeeList;
+export default withTracker(() => {
+  // set up subscription
+  Meteor.subscribe('employees');
+
+  // return an object.  Whatever we return will be sent to EmployeeList
+  // as props
+  return { employees: Employees.find({}).fetch() };
+}) (EmployeeList);
