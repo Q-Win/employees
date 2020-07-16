@@ -7,8 +7,10 @@ const EmployeeList = (props) => {
   return (
     <div>
       <div className="employee-list">
-        {props.employees.map(employee => <EmployeeDetail employee={employee} />)}
+        {props.employees.map(employee =>
+          <EmployeeDetail key={employee._id} employee={employee} />)}
       </div>
+      <button onClick={() => console.log('test')} className="btn btn-primary"> Load More</button>
     </div>
   );
 };
